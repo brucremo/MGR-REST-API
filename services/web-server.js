@@ -2,9 +2,6 @@ const http = require('http');
 const express = require('express');
 const webServerConfig = require('../config/web-server.js');
 const morgan = require('morgan');
-app.use(express.json({
-  reviver: reviveJson
-}));
 const database = require('./database.js');
 const router = require('./router.js');
 
@@ -17,6 +14,10 @@ function initialize() {
 
     // Combines logging info from request and response
     app.use(morgan('combined'));
+
+    app.use(express.json({
+      reviver: reviveJson
+    }));
  
     app.use('/', router);
  
