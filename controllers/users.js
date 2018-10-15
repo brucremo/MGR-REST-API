@@ -1,11 +1,11 @@
 const users = require('../db_apis/users.js');
  
-//GET requests handling
+//GET requests handling - RETRIEVE
 async function get(req, res, next) {
   try {
     const context = {};
  
-    context.id = parseInt(req.params.id, 10);
+    context.id = req.params.USERID;
  
     const rows = await users.find(context);
  
@@ -25,7 +25,7 @@ async function get(req, res, next) {
  
 module.exports.get = get;
 
-//POST requests handling
+//POST requests handling - CREATE
 function getUserFromRec(req) {
   const user = {
     USERID: req.body.USERID,
@@ -44,7 +44,7 @@ async function post(req, res, next) {
   try {
     let user = getUserFromRec(req);
  
-    employee = await users.create(user);
+    user = await users.create(user);
  
     res.status(201).json(user);
   } catch (err) {
@@ -53,3 +53,40 @@ async function post(req, res, next) {
 }
  
 module.exports.post = post;
+
+//PUT requests handling - UPDATE
+async function put(req, res, next) {
+  try {
+    let user = getUserFromRec(req);
+ 
+    user = await users.update(user);
+ 
+    if (user !== null) {
+      res.status(200).json(user);
+    } else {
+      res.status(404).end();
+    }
+  } catch (err) {
+    next(err);
+  }
+}
+ 
+module.exports.put = put;
+
+//DELETE requests handling - DELETE
+async function del(req, res, next) {
+  try {
+ 
+    const success = await users.delete(eq.params.USERID);
+ 
+    if (success) {
+      res.status(204).end();
+    } else {
+      res.status(404).end();
+    }
+  } catch (err) {
+    next(err);
+  }
+}
+ 
+module.exports.delete = del;
