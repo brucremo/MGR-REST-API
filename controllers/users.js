@@ -5,7 +5,7 @@ async function get(req, res, next) {
   try {
     const context = {};
  
-    context.id = req.params.USERID;
+    context.id = req.params.id;
  
     const rows = await users.find(context);
  
