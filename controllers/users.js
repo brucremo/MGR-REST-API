@@ -2,7 +2,28 @@ const users = require('../db_apis/users.js');
  
 //GET requests handling - RETRIEVE - OK
 async function get(req, res, next) {
-  try {
+  return new Promise(function (resolve, reject){
+
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+
+    const context = {};
+ 
+    context.id = req.params.id;
+ 
+    const rows = await users.find(context);
+
+    if (req.params.id) {
+      if (rows.length === 1) {
+       resolve(rows[0]);
+      } else {
+        reject();
+      }
+    } else {
+      resolve(rows);
+    }
+  });
+  /*try {
 
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
@@ -24,7 +45,7 @@ async function get(req, res, next) {
     }
   } catch (err) {
     next(err);
-  }
+  }*/
 }
  
 module.exports.get = get;
