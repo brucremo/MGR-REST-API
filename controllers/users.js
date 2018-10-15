@@ -11,7 +11,7 @@ async function get(req, res, next) {
  
     context.id = req.params.id;
  
-    const rows = await users.find(context);
+    const rows = users.find(context);
 
     if (req.params.id) {
       if (rows.length === 1) {
