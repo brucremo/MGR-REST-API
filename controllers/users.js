@@ -1,6 +1,6 @@
 const users = require('../db_apis/users.js');
  
-//GET requests handling - RETRIEVE
+//GET requests handling - RETRIEVE - OK
 async function get(req, res, next) {
   try {
     const context = {};
@@ -54,7 +54,7 @@ async function post(req, res, next) {
  
 module.exports.post = post;
 
-//PUT requests handling - UPDATE
+//PUT requests handling - UPDATE - OK
 async function put(req, res, next) {
   try {
     let user = getUserFromRec(req);
@@ -77,7 +77,7 @@ module.exports.put = put;
 async function del(req, res, next) {
   try {
  
-    const success = await users.delete(eq.params.USERID);
+    const success = await users.delete(req.params.id);
  
     if (success) {
       res.status(204).end();
