@@ -13,7 +13,6 @@ async function startup() {
  
   try {
     console.log('Initializing database module');
-    app.use(cors());
     await database.initialize(); 
   } catch (err) {
     console.error(err);
