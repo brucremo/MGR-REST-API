@@ -3,6 +3,7 @@ const express = require('express');
 const webServerConfig = require('../config/web-server.js');
 const morgan = require('morgan');
 const database = require('./database.js');
+var cors = require('cors');
 const router = require('./router.js');
 
 let httpServer;
