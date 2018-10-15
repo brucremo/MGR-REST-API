@@ -1,7 +1,7 @@
 const webServer = require('./services/web-server.js');
 
 const database = require('./services/database.js');
-
+var cors = require('cors');
 const dbConfig = require('./config/database.js');
 const defaultThreadPoolSize = 4;
 
@@ -13,7 +13,7 @@ async function startup() {
  
   try {
     console.log('Initializing database module');
- 
+    app.use(cors());
     await database.initialize(); 
   } catch (err) {
     console.error(err);
