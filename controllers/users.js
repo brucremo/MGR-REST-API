@@ -3,6 +3,10 @@ const users = require('../db_apis/users.js');
 //GET requests handling - RETRIEVE - OK
 async function get(req, res, next) {
   try {
+
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+
     const context = {};
  
     context.id = req.params.id;
