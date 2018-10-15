@@ -11,7 +11,6 @@
   "dependencies": {
     "express": "^4.16.4",
     "morgan": "^1.9.1",
-    "oracle-client": "^1.1.0",
-    "oracledb": "^3.0.0"
+    "oracle-client": "^1.1.0"
   }
 }
