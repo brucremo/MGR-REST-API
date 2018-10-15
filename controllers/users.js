@@ -46,6 +46,10 @@ function getUserFromRec(req) {
  
 async function post(req, res, next) {
   try {
+
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+
     let user = getUserFromRec(req);
  
     user = await users.create(user);
@@ -61,6 +65,10 @@ module.exports.post = post;
 //PUT requests handling - UPDATE - OK
 async function put(req, res, next) {
   try {
+
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+
     let user = getUserFromRec(req);
  
     user = await users.update(user);
@@ -80,6 +88,9 @@ module.exports.put = put;
 //DELETE requests handling - DELETE
 async function del(req, res, next) {
   try {
+
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
  
     const success = await users.delete(req.params.id);
  
