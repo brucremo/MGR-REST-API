@@ -47,6 +47,16 @@ async function shutdown(e) {
    
       err = err || e;
     }
+
+    try {
+      console.log('Closing database module');
+   
+      await database.close(); 
+    } catch (err) {
+      console.log('Encountered error', e);
+   
+      err = err || e;
+    }
    
     console.log('Exiting process');
    
@@ -55,16 +65,6 @@ async function shutdown(e) {
     } else {
       process.exit(0);
     }
-
-    try {
-        console.log('Closing database module');
-     
-        await database.close(); 
-      } catch (err) {
-        console.log('Encountered error', e);
-     
-        err = err || e;
-      }
   }
    
   process.on('SIGTERM', () => {
