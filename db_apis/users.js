@@ -96,7 +96,7 @@ async function del(id) {
     USERID: id,
     rowcount: {
       dir: oracledb.BIND_OUT,
-      type: oracledb.DB_TYPE_VARCHAR
+      type: oracledb.VARCHAR
     }
   }
   const result = await database.Query(deleteSql, binds);
