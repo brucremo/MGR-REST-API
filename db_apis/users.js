@@ -50,8 +50,6 @@ async function create(usr) {
 
   const result = await database.Query(createSql, user);
 
-  user.USERID = result.outBinds.USERID[0];
-
   return user;
 }
 
