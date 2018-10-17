@@ -1,6 +1,5 @@
 const webServer = require('./services/web-server.js');
 const database = require('./services/database.js');
-const bcrypt = require('bcrypt');
 const dbConfig = require('./config/database.js');
 const defaultThreadPoolSize = 4;
 
