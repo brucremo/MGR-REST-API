@@ -64,13 +64,27 @@ async function post(req, res, next) {
 module.exports.post = post;
 
 //PUT requests handling - UPDATE - OK
+
+function getUserFromRecPUT(req) {
+  const user = {
+    USERID: req.body.USERID,
+    USERNAME: req.body.USERNAME,
+    USERSUMMARY: req.body.USERSUMMARY,
+    USERJOINDATE: req.body.USERJOINDATE,
+    USERAVATAR: req.body.USERAVATAR,
+    USERLOCATION: req.body.USERLOCATION,
+    USERAGE: req.body.USERAGE
+  };
+ 
+  return user;
+}
 async function put(req, res, next) {
   try {
 
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
 
-    let user = getUserFromRec(req);
+    let user = getUserFromRecPUT(req);
  
     user = await users.update(user);
  

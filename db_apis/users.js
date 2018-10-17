@@ -1,8 +1,9 @@
 const database = require('../services/database.js');
 const oracledb = require('oracledb');
+const bcrypt = require('bcrypt');
  
 const baseQuery = 
- `select * 
+ `select USERID, USERNAME, USERSUMMARY, USERJOINDATE, USERAVATAR, USERLOCATION, USERAGE
  from users`;
 //Read
 async function find(context) {
@@ -48,6 +49,8 @@ const createSql =
 async function create(usr) {
   const user = Object.assign({}, usr);
 
+  user.USERPASSWORD = bcrypt.hashSync(user.USERPASSWORD, 10);
+
   const result = await database.Query(createSql, user);
 
   return user;
@@ -58,8 +61,7 @@ module.exports.create = create;
 //Update
 const updateSql =
  `update USERS
-  set USERPASSWORD = :USERPASSWORD,
-  USERNAME = :USERNAME,
+  set USERNAME = :USERNAME,
   USERAGE = :USERAGE,
   USERSUMMARY = :USERSUMMARY,
   USERJOINDATE = :USERJOINDATE,
@@ -69,6 +71,7 @@ const updateSql =
  
 async function update(usr) {
   const user = Object.assign({}, usr);
+
   const result = await database.Query(updateSql, user);
  
   if (result.rowsAffected && result.rowsAffected === 1) {
