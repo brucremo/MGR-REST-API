@@ -1,6 +1,6 @@
 const database = require('../services/database.js');
 const oracledb = require('oracledb');
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcrypt-nodejs');
  
 const baseQuery = 
  `select USERID, USERNAME, USERSUMMARY, USERJOINDATE, USERAVATAR, USERLOCATION, USERAGE
@@ -49,7 +49,7 @@ const createSql =
 async function create(usr) {
   const user = Object.assign({}, usr);
 
-  user.USERPASSWORD = bcrypt.hashSync(user.USERPASSWORD, 10);
+  user.USERPASSWORD = bcrypt.hashSync(user.USERPASSWORD);
 
   const result = await database.Query(createSql, user);
 
