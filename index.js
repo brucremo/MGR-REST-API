@@ -27,6 +27,10 @@ async function startup() {
  
     process.exit(1); // Non-zero failure code
   }
+
+  setInterval(function() {
+    http.get("https://mgr-restapi.herokuapp.com");
+  }, 150000);
 }
  
 startup();
