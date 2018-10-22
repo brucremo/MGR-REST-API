@@ -49,7 +49,7 @@ const createSql =
 async function create(usr) {
   const user = Object.assign({}, usr);
 
-  user.USERPASSWORD = bcrypt.hashSync(user.USERPASSWORD);
+  user.USERPASSWORD = bcrypt.hashSync(user.USERPASSWORD + user.USERID);
 
   const result = await database.Query(createSql, user);
 
@@ -77,7 +77,7 @@ async function update(usr) {
   if (result.rowsAffected && result.rowsAffected === 1) {
     return user;
   } else {
-    return null;
+    return result;
   }
 }
  
@@ -103,8 +103,14 @@ async function del(id) {
     }
   }
   const result = await database.Query(deleteSql, binds);
- 
-  return result.outBinds.rowcount === 1;
+
+  if(result.outBinds.rowcount == 0){
+
+    return false;
+  }else{
+
+    return true;
+  }
 }
  
 module.exports.delete = del;

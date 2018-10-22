@@ -9,8 +9,8 @@ router.route('/users/:id?')
   .put(users.put)
   .delete(users.delete);
  
-router.route('/users/:id/pwd?')
-  .get(password.get)
+router.route('/users/:id/pwd')
+  .post(password.post)
   .put(password.put);
 
 module.exports = router;

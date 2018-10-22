@@ -1,8 +1,9 @@
 const database = require('../services/database.js');
-const oracledb = require('oracledb');
+const bcrypt = require('bcrypt-nodejs');
  
 const baseQuery = 
- `select USERPASSWORD 
+ `select USERID
+ USERPASSWORD 
  from users`;
 //Read
 async function find(context) {
@@ -30,12 +31,15 @@ const updateSql =
  
 async function update(usr) {
   const user = Object.assign({}, usr);
+
+  user.USERPASSWORD = bcrypt.hashSync(user.USERPASSWORD + user.USERID);
+
   const result = await database.Query(updateSql, user);
  
   if (result.rowsAffected && result.rowsAffected === 1) {
-    return user;
+    return "Password Updated Successfully";
   } else {
-    return null;
+    return "Error Updating Password";
   }
 }
  

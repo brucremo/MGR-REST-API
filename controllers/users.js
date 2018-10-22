@@ -4,9 +4,6 @@ const users = require('../db_apis/users.js');
 async function get(req, res, next) {
   try {
 
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-
     const context = {};
  
     context.id = req.params.id;
@@ -48,16 +45,19 @@ function getUserFromRec(req) {
 async function post(req, res, next) {
   try {
 
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-
     let user = getUserFromRec(req);
  
     user = await users.create(user);
  
-    res.status(201).json(user);
+    res.status(201).json(user.USERID.toUpperCase() + "_ADDED");
   } catch (err) {
-    next(err);
+    if(err.errorNum == 1){
+
+      res.status(501).end("ERROR_USER_EXISTS");
+    }else{
+
+      res.status(500).end(err.message);
+    }
   }
 }
  
@@ -80,18 +80,14 @@ function getUserFromRecPUT(req) {
 }
 async function put(req, res, next) {
   try {
-
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-
     let user = getUserFromRecPUT(req);
  
     user = await users.update(user);
  
-    if (user !== null) {
-      res.status(200).json(user);
+    if (user.rowsAffected !== 0) {
+      res.status(200).json(user.USERID.toUpperCase() + "_UPDATED");
     } else {
-      res.status(404).end();
+      res.status(404).end("UPDATE_ERROR");
     }
   } catch (err) {
     next(err);
@@ -103,16 +99,13 @@ module.exports.put = put;
 //DELETE requests handling - DELETE
 async function del(req, res, next) {
   try {
-
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
  
     const success = await users.delete(req.params.id);
  
     if (success) {
-      res.status(204).end();
+      res.status(204).end("USER" + req.params.id.toUpperCase() + "_CREATED");
     } else {
-      res.status(404).end();
+      res.status(409).end("ERROR_USERID_NONEXISTENT");
     }
   } catch (err) {
     next(err);
