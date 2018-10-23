@@ -10,7 +10,7 @@ router.route('/users/:id?')
   .delete(users.delete);
  
 router.route('/users/:id/pwd')
-  .post(password.post)
-  .put(password.put);
+  .put(password.put)
+  .post(password.post);
 
 module.exports = router;

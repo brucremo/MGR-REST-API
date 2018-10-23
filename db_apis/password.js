@@ -1,46 +1,42 @@
 const database = require('../services/database.js');
 const bcrypt = require('bcrypt-nodejs');
- 
-const baseQuery = 
- `select USERID
- USERPASSWORD 
- from users`;
-//Read
-async function find(context) {
-  let query = baseQuery;
-  const binds = {};
- 
-  if (context.id) {
-    binds.USERID = context.id;
- 
-    query += `\nwhere USERID = :USERID`;
-  }
- 
-  const result = await database.Query(query, binds);
- 
-  return result.rows;
-}
- 
-module.exports.find = find;
 
-//Update
-const updateSql =
- `update USERS
-  set USERPASSWORD = :USERPASSWORD
+//Query if User + Password pair is correct
+const getPwd =
+ `select USERPASSWORD
+  from USERS
   where USERID = :USERID`;
  
-async function update(usr) {
-  const user = Object.assign({}, usr);
+async function pair(usr, qry) {
+  const user = Object.assign({}, qry);
 
-  user.USERPASSWORD = bcrypt.hashSync(user.USERPASSWORD + user.USERID);
+  const result = await database.Query(getPwd, user);
 
-  const result = await database.Query(updateSql, user);
- 
-  if (result.rowsAffected && result.rowsAffected === 1) {
-    return "Password Updated Successfully";
-  } else {
-    return "Error Updating Password";
+  const res = {
+    USERID: user.USERID,
+    USERPASSWORD: "true"
+  };
+
+  if(result.rows.length == 1){
+
+    if(bcrypt.compareSync (usr.USERID + usr.USERPASSWORD, result.rows[0].USERPASSWORD)){
+
+      return res;
+    }else{
+
+      res.USERPASSWORD = "false";
+
+      return res;
+    }
+  }else{
+
+    res.USERPASSWORD = "false";
+
+    return res;
   }
+
 }
  
-module.exports.update = update;
+module.exports.pair = pair;
+
+
