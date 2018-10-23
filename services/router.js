@@ -9,7 +9,7 @@ router.route('/users/:id?')
   .put(users.put)
   .delete(users.delete);
  
-router.route('/users/pwd')
+router.route('/users/:id/pwd')
   .put(password.put)
   .post(password.post);
 
