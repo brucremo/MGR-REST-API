@@ -2,6 +2,7 @@ const express = require('express');
 const router = new express.Router();
 const users = require('../controllers/users.js');
 const password = require('../controllers/password.js');
+const reset = require('../controllers/reset.js');
 
 router.route('/users/:id?')
   .get(users.get)
@@ -12,5 +13,9 @@ router.route('/users/:id?')
 router.route('/users/:id/pwd')
   .put(password.put)
   .post(password.post);
+
+router.route('/:id/reset/:guid?')
+  .put(reset.put)
+  .post(reset.post);
 
 module.exports = router;
