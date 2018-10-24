@@ -1,4 +1,4 @@
-const reset = require('../db_apis/reset.js');
+/*const reset = require('../db_apis/reset.js');
 
 //POST requests handling - CREATE
 function getUserFromRec(req) {
@@ -15,14 +15,14 @@ async function post(req, res, next) {
 
     let user = getUserFromRec(req);
  
-    user = await reset.create(user, usrParam);
+    user = await reset.checkGUID(user);
  
-    if(user.USERPASSWORD){
+    if(user.USERID){
 
       return res.status(201).json(user);
     }else{
 
-      res.status(501).end(user);
+      res.status(501).end("");
     }
     
   } catch (err) {
@@ -64,4 +64,4 @@ async function put(req, res, next) {
   }
 }
 
-module.exports.put = put;
+module.exports.put = put;*/

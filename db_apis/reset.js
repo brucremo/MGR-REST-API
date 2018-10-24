@@ -1,4 +1,4 @@
-const database = require('../services/database.js');
+/*const database = require('../services/database.js');
 const bcrypt = require('bcrypt-nodejs');
 const mailer = require('../services/mailer.js');
 
@@ -52,40 +52,23 @@ async function process(usr, qry) {
 module.exports.process = process;
 
 //UPDATE
-const updateSQL =
-  `update USERS
-set USERPASSWORD = :USERPASSWORD
-where USERID = :USERID`;
+const checkSQL = 
+    'select USERID from USERS where RESETCODE = :RESETCODE'
 
-async function create(usr, qry) {
-  const user = Object.assign({}, qry);
+async function checkGUID(usr) {
+  const user = Object.assign({}, usr);
 
-  const result = await database.Query(getPwd, user);
+  const result = await database.Query(checkSQL, user);
 
   if (result.rows.length == 1) {
 
-    if (bcrypt.compareSync(usr.USERID + usr.USERPASSWORD, result.rows[0].USERPASSWORD)) {
-
-      const newUsr = {
-
-        USERID: usr.USERID,
-        USERPASSWORD: bcrypt.hashSync(usr.USERPASSWORD + usr.USERNEWPASSWORD)
-      };
-
-      const aw = await database.Query(updateSQL, newUsr);
-
-      newUsr.USERPASSWORD = "true";
-
-      return newUsr;
-    }else{
-
-      return "WRONG_CURRENT_PASSWORD";
-    }
+    return result.rows[0];
   }else{
 
-    return "USER_NOT_FOUND";
+    return "INVALID_GUID";
   }
 }
 
-module.exports.create = create;
+module.exports.checkGUID = checkGUID;
 
+*/

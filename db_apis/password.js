@@ -19,7 +19,9 @@ async function pair(usr, qry) {
 
   if (result.rows.length == 1) {
 
-    if (bcrypt.compareSync(usr.USERID + usr.USERPASSWORD, result.rows[0].USERPASSWORD)) {
+
+
+    if (bcrypt.compareSync(usr.USERPASSWORD + usr.USERID, result.rows[0].USERPASSWORD)) {
 
       return res;
     } else {
