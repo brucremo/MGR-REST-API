@@ -1,37 +1,31 @@
-/*const reset = require('../db_apis/reset.js');
-
-//POST requests handling - CREATE
-function getUserFromRec(req) {
-  const user = {
-    USERPASSWORD: req.body.USERPASSWORD,
-    GUID: req.params.guid
-  };
+const reset = require('../db_apis/reset.js');
  
-  return user;
-}
- 
-async function post(req, res, next) {
+//GET requests handling - RETRIEVE - OK
+async function get(req, res, next) {
   try {
 
-    let user = getUserFromRec(req);
+    const context = {};
  
-    user = await reset.checkGUID(user);
+    context.id = req.params.id;
+    context.guid = req.params.guid;
  
-    if(user.USERID){
-
-      return res.status(201).json(user);
-    }else{
-
-      res.status(501).end("");
+    const rows = await reset.checkGUID(context);
+ 
+    if (req.params.id && req.params.guid) {
+      if (rows.length === 1) {
+        res.status(200).json(rows[0]);
+      } else {
+        res.status(404).end();
+      }
+    } else {
+      res.status(200).json(rows);
     }
-    
   } catch (err) {
-
-    res.status(500).end(err);
+    next(err);
   }
 }
  
-module.exports.post = post;
+module.exports.get = get;
 
 //PUT requests handling - OK
 
@@ -64,4 +58,4 @@ async function put(req, res, next) {
   }
 }
 
-module.exports.put = put;*/
+module.exports.put = put;

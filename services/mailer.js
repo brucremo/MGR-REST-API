@@ -3,15 +3,15 @@ var nodemailer = require('nodemailer');
 var transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
-        user: 'youremail@gmail.com',
-        pass: 'yourpassword'
+        user: 'mgrreset@gmail.com',
+        pass: 'thae4Eev'
     }
 });
 
 async function sendMail(to, text) {
 
     var mailOptions = {
-        from: 'youremail@gmail.com',
+        from: 'mgrreset@gmail.com',
         to: to,
         subject: 'Password Reset Request',
         text: text

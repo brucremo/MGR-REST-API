@@ -14,8 +14,8 @@ router.route('/users/:id/pwd')
   .put(password.put)
   .post(password.post);
 
-/*router.route('/:id/reset/:guid?')
-  .put(reset.put)
-  .post(reset.post);
-*/
+router.route('/:id/reset/:guid?')
+  .get(reset.get)
+  .put(reset.put);
+
 module.exports = router;
