@@ -90,10 +90,10 @@ const updateSQL =
 set USERPASSWORD = :USERPASSWORD
 where USERID = :USERID`;
 
-async function create(usr) {
+async function create(usr, qry) {
   const user = Object.assign({}, usr);
 
-  const result = await database.Query(`select USERNAME from USERS  where USERID = :USERID`, user.USERID);
+  const result = await database.Query(`select USERNAME from USERS  where USERID = :USERID`, qry);
 
   if (result.rows.length == 1) {
 

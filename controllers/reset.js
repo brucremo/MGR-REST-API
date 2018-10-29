@@ -74,8 +74,13 @@ async function post(req, res, next) {
   try {
 
     let user = getUserFromRec(req);
+
+    const usrParam = {
+
+      USERID: user.USERID
+    };
  
-    user = await reset.create(user);
+    user = await reset.create(user, usrParam);
  
     if(user.USERPASSWORD){
 
