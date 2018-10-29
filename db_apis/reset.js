@@ -93,7 +93,7 @@ where USERID = :USERID`;
 async function create(usr) {
   const user = Object.assign({}, usr);
 
-  //const result = await database.Query(getPwd, user);
+  const result = await database.Query(`select USERNAME from USERS  where USERID = :USERID`, user.USERID);
 
   if (result.rows.length == 1) {
 
