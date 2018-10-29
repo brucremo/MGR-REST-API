@@ -57,7 +57,7 @@ async function create(usr, qry) {
       const newUsr = {
 
         USERID: usr.USERID,
-        USERPASSWORD: bcrypt.hashSync(usr.USERPASSWORD + usr.USERNEWPASSWORD)
+        USERPASSWORD: bcrypt.hashSync(usr.USERID + usr.USERNEWPASSWORD)
       };
 
       const aw = await database.Query(updateSQL, newUsr);

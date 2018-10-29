@@ -59,3 +59,36 @@ async function put(req, res, next) {
 }
 
 module.exports.put = put;
+
+//POST requests handling - CREATE
+function getUserFromRec(req) {
+  const user = {
+    USERID: req.body.USERID,
+    USERPASSWORD: req.body.USERPASSWORD
+  };
+ 
+  return user;
+}
+ 
+async function post(req, res, next) {
+  try {
+
+    let user = getUserFromRec(req);
+ 
+    user = await reset.create(user);
+ 
+    if(user.USERPASSWORD){
+
+      return res.status(201).json(user);
+    }else{
+
+      res.status(501).end(user);
+    }
+    
+  } catch (err) {
+
+    res.status(500).end(err);
+  }
+}
+ 
+module.exports.post = post;
