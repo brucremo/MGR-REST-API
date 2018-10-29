@@ -105,7 +105,7 @@ async function create(usr, qry) {
         USERPASSWORD: bcrypt.hashSync(usr.USERID + usr.USERPASSWORD)
       };*/
 
-      user.USERPASSWORD = bcrypt.hashSync(user.USERID + user.USERPASSWORD);
+      user.USERPASSWORD = bcrypt.hashSync(user.USERPASSWORD + user.USERID);
 
       const aw = await database.Query(updateSQL, user);
 
