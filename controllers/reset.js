@@ -82,12 +82,12 @@ async function post(req, res, next) {
       return res.status(201).json(user);
     }else{
 
-      res.status(501).end(user);
+      res.status(501).end();
     }
     
   } catch (err) {
 
-    res.status(500).end(err);
+    res.status(500).end();
   }
 }
  
