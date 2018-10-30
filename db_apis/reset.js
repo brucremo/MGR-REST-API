@@ -117,7 +117,7 @@ async function create(usr, qry) {
 
       await database.Query(`UPDATE USERS
         SET RESETCODE = null
-        WHERE USERID = :USERID;`, qry);
+        WHERE USERID = :USERID; commit;`, qry);
 
       return user;
     //}else{
