@@ -54,7 +54,7 @@ module.exports.process = process;
 
 //UPDATE
 const checkSQL = 
-    'select USERID, USERNAME, RESETEXPIRY, SYSDATE from USERS where RESETCODE = :RESETCODE'
+    'select USERID, USERNAME, RESETEXPIRY, SYSDATE from USERS where RESETCODE = :RESETCODE and USERID = :USERID'
 
 //Read
 async function checkGUID(context) {
@@ -64,6 +64,7 @@ async function checkGUID(context) {
   if (context.guid) {
 
     binds.RESETCODE = context.guid;
+    binds.USERID = context.id;
   }
  
   const result = await database.Query(checkSQL, binds);
