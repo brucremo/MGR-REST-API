@@ -22,7 +22,7 @@ async function process(usr, qry) {
         RESETCODE : bcrypt.hashSync(usr.USERID + qry.USEREMAIL + Math.random())
     };
 
-    param.RESETCODE = param.RESETCODE.replace(/$/,'.');
+    param.RESETCODE = param.RESETCODE.substr(0, 8);
 
     await database.Query("update USERS set RESETCODE = :RESETCODE where USERID = :USERID", param);
     //Create trigger to get the current date
