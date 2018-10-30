@@ -3,7 +3,7 @@ const oracledb = require('oracledb');
 const bcrypt = require('bcrypt-nodejs');
  
 const baseQuery = 
- `select USERID, USERNAME, USERSUMMARY, USERJOINDATE, USERAVATAR, USERLOCATION, USERAGE
+ `select USERID, USERNAME, USERSUMMARY, USERJOINDATE, USERAVATAR, USERLOCATION, USERAGE, USEREMAIL
  from users`;
 //Read
 async function find(context) {
