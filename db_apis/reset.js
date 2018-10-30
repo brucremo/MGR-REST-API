@@ -12,7 +12,7 @@ async function process(usr, qry) {
 
   const result = await database.Query(getEmail, user);
 
-  var appURL = "https://mgr-restapi.herokuapp.com";
+  var appURL = "http://localhost:4200";
 
   if (result.rows.length == 1) {
 
