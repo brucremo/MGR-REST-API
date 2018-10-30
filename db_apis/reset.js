@@ -19,7 +19,7 @@ async function process(usr, qry) {
     const param = {
 
         USERID : usr.USERID,
-        RESETCODE : bcrypt.hashSync(usr.USERID + qry.USEREMAIL)
+        RESETCODE : bcrypt.hashSync(usr.USERID + qry.USEREMAIL + Math.random())
     };
 
     param.RESETCODE = param.RESETCODE.replace('/','');
