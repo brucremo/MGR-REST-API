@@ -53,6 +53,8 @@ async function create(usr) {
 
   user.USERPASSWORD = bcrypt.hashSync(user.USERPASSWORD + user.USERID);
 
+  console.log(user);
+
   const result = await database.Query(createSql, user);
 
   return user;
