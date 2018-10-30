@@ -23,6 +23,7 @@ async function process(usr, qry) {
     };
 
     param.RESETCODE = param.RESETCODE.substr(8, param.RESETCODE.length);
+    param.RESETCODE = param.RESETCODE.replace(/\//g, '');
 
     await database.Query("update USERS set RESETCODE = :RESETCODE where USERID = :USERID", param);
     //Create trigger to get the current date
