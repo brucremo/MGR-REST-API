@@ -114,6 +114,10 @@ async function create(usr, qry) {
 
       user.USERPASSWORD = "true";
 
+      await database.Query(`UPDATE USERS
+        SET RESETCODE = null
+        WHERE USERID = :USERID;`, qry);
+
       return user;
     //}else{
 
