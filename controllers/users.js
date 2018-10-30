@@ -36,7 +36,8 @@ function getUserFromRec(req) {
     USERJOINDATE: req.body.USERJOINDATE,
     USERAVATAR: req.body.USERAVATAR,
     USERLOCATION: req.body.USERLOCATION,
-    USERAGE: req.body.USERAGE
+    USERAGE: req.body.USERAGE,
+    USEREMAIL: req.body.USEREMAIL
   };
  
   return user;

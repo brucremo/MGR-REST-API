@@ -33,7 +33,8 @@ const createSql =
   USERJOINDATE,
   USERAVATAR,
   USERLOCATION,
-  USERAGE
+  USERAGE,
+  USEREMAIL
   ) values (
     :USERID,
     :USERPASSWORD,
@@ -42,7 +43,8 @@ const createSql =
     :USERJOINDATE,
     :USERAVATAR,
     :USERLOCATION,
-    :USERAGE
+    :USERAGE,
+    :USEREMAIL
   ) returning USERID
   into :USERID`;
 
