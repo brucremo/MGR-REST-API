@@ -18,7 +18,7 @@ async function get(req, res, next) {
         res.status(404).end();
       }
     } else {
-      res.status(200).json(rows);
+      res.status(404).end();
     }
   } catch (err) {
     next(err);
