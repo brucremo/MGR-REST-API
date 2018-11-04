@@ -12,6 +12,7 @@
     "cors": "^2.8.4",
     "express": "^4.16.4",
     "fs": "0.0.1-security",
+    "igdb-api-node": "^3.1.7",
     "morgan": "^1.9.1",
     "nodemailer": "^4.6.8",
     "oracle-client": "^1.1.0",
