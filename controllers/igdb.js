@@ -30,17 +30,33 @@ module.exports.getByName = getByName;
 async function getGame(req, res, next) {
     try {
 
+        var game;
+
         client.games({
             ids: [
                 req.params.id
             ],
             fields: '*', // Return all fields
+
         }).then(response => {
-            res.status(200).json(response.body);
+            //res.status(200).json(response.body);
+            game = response.body;
+
+            client.companies({
+                ids: [
+                    game[0].developers
+                ],
+                fields: 'name'
+            }).then(response => {
+                game[0].developers = response.body;
+                res.status(200).json(game[0]);
+            }).catch(err => {
+                res.status(429).end(err.message);
+            });
+
         }).catch(err => {
             res.status(429).end(err.message);
         });
-
     } catch (err) {
         res.status(429).end();
     }
