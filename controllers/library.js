@@ -55,7 +55,7 @@ async function get(req, res, next) {
   }
    
   module.exports.get = get;
-
+  
   //DELETE requests handling - DELETE
 async function del(req, res, next) {
     try {

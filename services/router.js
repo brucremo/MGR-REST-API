@@ -3,8 +3,9 @@ const router = new express.Router();
 const users = require('../controllers/users.js');
 const password = require('../controllers/password.js');
 const reset = require('../controllers/reset.js');
-const library = require('../controllers/library.js')
+const library = require('../controllers/library.js');
 const igdb = require('../controllers/igdb.js');
+const reviews = require('../controllers/reviews.js');
 
 router.route('/users/:id?')
   .get(users.get)
@@ -35,5 +36,13 @@ router.route('/games/:name/:offset?')
 
 router.route('/game/:id/')
   .get(igdb.getGame);
+
+//Reviews
+router.route('/review/:gameid/:userid')
+  .post(reviews.post)
+  .delete(reviews.delete);
+
+router.route('/reviews/:gameid')
+  .get(reviews.get);
 
 module.exports = router;
