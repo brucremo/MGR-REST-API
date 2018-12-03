@@ -17,7 +17,7 @@ const createSql =
   )`;
 
   const createSqlGame =
- `insert into reviews (
+ `insert into games (
   GAMEID
   ) values (
     :GAMEID
@@ -30,7 +30,13 @@ async function create(review) {
       GAMEID: review.GAMEID
     }
 
-    await database.Query(createSqlGame, newGame);
+    try {
+      
+      await database.Query(createSqlGame, newGame);
+    } catch (error) {
+      
+      console.log(error);
+    }
 
     const result = await database.Query(createSql, review);
 
