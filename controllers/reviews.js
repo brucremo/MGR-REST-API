@@ -8,7 +8,9 @@ async function post(req, res, next) {
             USERID: req.params.userid,
             GAMEID: req.params.gameid,
             REVIEWSUMMARY: req.body.REVIEWSUMMARY,
-            REVIEWRATING: req.body.REVIEWRATING
+            REVIEWRATING: req.body.REVIEWRATING,
+            GAMETIME: req.body.GAMETIME,
+            GAMEPLATFORM: req.body.GAMEPLATFORM
         };
 
         object = await reviews.create(object);

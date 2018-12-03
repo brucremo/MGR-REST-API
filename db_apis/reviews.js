@@ -8,12 +8,16 @@ const createSql =
   GAMEID,
   USERID,
   REVIEWSUMMARY,
-  REVIEWRATING
+  REVIEWRATING,
+  GAMETIME,
+  GAMEPLATFORM
   ) values (
     :GAMEID,
     :USERID,
     :REVIEWSUMMARY,
-    :REVIEWRATING
+    :REVIEWRATING,
+    :GAMETIME,
+    :GAMEPLATFORM
   )`;
 
   const createSqlGame =
