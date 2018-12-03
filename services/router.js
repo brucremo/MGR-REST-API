@@ -40,6 +40,7 @@ router.route('/game/:id/')
 //Reviews
 router.route('/review/:gameid/:userid')
   .post(reviews.post)
+  .put(reviews.put)
   .delete(reviews.delete);
 
 router.route('/reviews/:gameid')

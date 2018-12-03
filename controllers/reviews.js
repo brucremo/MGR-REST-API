@@ -67,3 +67,36 @@ async function del(req, res, next) {
 }
 
 module.exports.delete = del;
+
+//PUT requests handling - UPDATE - OK
+
+function getReviewFromReq(req) {
+
+    const object = {
+        USERID: req.params.userid,
+        GAMEID: req.params.gameid,
+        REVIEWSUMMARY: req.body.REVIEWSUMMARY,
+        REVIEWRATING: req.body.REVIEWRATING,
+        //GAMETIME: req.body.GAMETIME,
+        GAMEPLATFORM: req.body.GAMEPLATFORM
+    };
+   
+    return object;
+  }
+  async function put(req, res, next) {
+    try {
+      let user = getReviewFromReq(req);
+   
+      user = await reviews.update(user);
+   
+      if (user.rowsAffected !== 0) {
+        res.status(200).json();
+      } else {
+        res.status(500).end("UPDATE_ERROR");
+      }
+    } catch (err) {
+      next(err);
+    }
+  }
+   
+  module.exports.put = put;

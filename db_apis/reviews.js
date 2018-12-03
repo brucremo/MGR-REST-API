@@ -105,3 +105,25 @@ async function del(userid, gameid) {
 }
  
 module.exports.delete = del;
+
+//Update
+const updateSql =
+ `update REVIEWS
+  set REVIEWSUMMARY = :REVIEWSUMMARY,
+  REVIEWRATING = :REVIEWRATING,
+  GAMEPLATFORM = :GAMEPLATFORM
+  where USERID = :USERID
+  and GAMEID = :GAMEID`;
+ 
+async function update(review) {
+
+  const result = await database.Query(updateSql, review);
+ 
+  if (result.rowsAffected && result.rowsAffected === 1) {
+    return review;
+  } else {
+    return result;
+  }
+}
+ 
+module.exports.update = update;
