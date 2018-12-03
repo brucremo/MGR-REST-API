@@ -16,7 +16,21 @@ const createSql =
     :REVIEWRATING
   )`;
 
+  const createSqlGame =
+ `insert into reviews (
+  GAMEID
+  ) values (
+    :GAMEID
+  )`;
+
 async function create(review) {
+
+    let newGame = {
+
+      GAMEID: review.GAMEID
+    }
+
+    await database.Query(createSqlGame, newGame);
 
     const result = await database.Query(createSql, review);
 
