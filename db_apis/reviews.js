@@ -148,3 +148,26 @@ async function findUser(context) {
 }
 
 module.exports.findUser = findUser;
+
+const baseQueryOne =
+    `select *
+ from REVIEWS`;
+//Read
+async function findReview(context) {
+    let query = baseQueryUser;
+    const binds = {};
+
+    if (context.id) {
+        binds.USERID = context.id;
+        binds.GAMEID = context.gameid;
+
+        query += `\nwhere USERID = :USERID
+        and GAMEID = :GAMEID`;
+    }
+
+    var result = await database.Query(query, binds);
+
+    return result.rows;
+}
+
+module.exports.findReview = findReview;

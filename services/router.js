@@ -39,6 +39,7 @@ router.route('/game/:id/')
 
 //Reviews
 router.route('/review/:gameid/:userid')
+  .get(reviews.getOne)
   .post(reviews.post)
   .put(reviews.put)
   .delete(reviews.delete);

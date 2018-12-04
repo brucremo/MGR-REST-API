@@ -126,3 +126,30 @@ function getReviewFromReq(req) {
   }
    
   module.exports.put = put;
+
+  //GET requests handling - RETRIEVE - OK
+async function getOne(req, res, next) {
+    try {
+
+        const context = {};
+
+        context.id = req.params.userid;
+        context.gameid = req.params.gameid;
+
+        const rows = await reviews.findReview(context);
+
+        if (req.params.userid) {
+            if (rows.length >= 0) {
+                res.status(200).json(rows);
+            } else {
+                res.status(404).end();
+            }
+        } else {
+            res.status(200).json(rows);
+        }
+    } catch (err) {
+        next(err);
+    }
+}
+
+module.exports.getOne = getOne;
