@@ -127,3 +127,24 @@ async function update(review) {
 }
  
 module.exports.update = update;
+
+const baseQueryUser =
+    `select *
+ from REVIEWS`;
+//Read
+async function findUser(context) {
+    let query = baseQueryUser;
+    const binds = {};
+
+    if (context.id) {
+        binds.USERID = context.id;
+
+        query += `\nwhere USERID = :USERID`;
+    }
+
+    var result = await database.Query(query, binds);
+
+    return result.rows;
+}
+
+module.exports.findUser = findUser;

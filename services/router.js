@@ -46,4 +46,7 @@ router.route('/review/:gameid/:userid')
 router.route('/reviews/:gameid')
   .get(reviews.get);
 
+router.route('/reviews/user/:userid')
+  .get(reviews.getUser);
+
 module.exports = router;

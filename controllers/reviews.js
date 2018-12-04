@@ -50,6 +50,32 @@ async function get(req, res, next) {
 
 module.exports.get = get;
 
+//GET requests handling - RETRIEVE - OK
+async function getUser(req, res, next) {
+    try {
+
+        const context = {};
+
+        context.id = req.params.userid;
+
+        const rows = await reviews.findUser(context);
+
+        if (req.params.userid) {
+            if (rows.length >= 0) {
+                res.status(200).json(rows);
+            } else {
+                res.status(404).end();
+            }
+        } else {
+            res.status(200).json(rows);
+        }
+    } catch (err) {
+        next(err);
+    }
+}
+
+module.exports.getUser = getUser;
+
 //DELETE requests handling - DELETE
 async function del(req, res, next) {
     try {
