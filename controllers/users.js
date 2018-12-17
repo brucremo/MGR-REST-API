@@ -1,5 +1,5 @@
 const users = require('../db_apis/users.js');
- 
+
 //GET requests handling - RETRIEVE - OK
 async function get(req, res, next) {
   try {
