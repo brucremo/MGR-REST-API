@@ -12,7 +12,7 @@ async function process(usr, qry) {
 
   const result = await database.Query(getEmail, user);
 
-  var appURL = "https://mgr-app.herokuapp.com/";
+  var appURL = "https://mgr-app.herokuapp.com";
 
   if (result.rows.length == 1) {
 
