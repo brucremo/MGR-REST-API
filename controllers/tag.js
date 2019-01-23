@@ -28,12 +28,18 @@ module.exports.post = post;
 
 //Get all games for a tag on the user's library
 async function get(req, res, next) {
+
+    if(!req.params.userid){
+        
+        res.status(404).end();
+    }
+
     try {
 
         const context = {
 
-            USERID: req.body.USERID,
-            TAGID: req.body.TAGID
+            USERID: req.params.userid,
+            TAGID: req.params.tagid
         };
 
         const rows = await tag.find(context);
