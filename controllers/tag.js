@@ -30,7 +30,7 @@ module.exports.post = post;
 async function get(req, res, next) {
 
     if(!req.params.userid){
-        
+
         res.status(404).end();
     }
 
@@ -64,7 +64,7 @@ module.exports.get = get;
 async function del(req, res, next) {
     try {
 
-        const success = await tag.delete(req.body.TAGID);
+        const success = await tag.del(req.params.tagid, req.params.userid);
 
         if (success) {
             res.status(204).end("Tag Removed");

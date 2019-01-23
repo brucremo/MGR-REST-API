@@ -69,7 +69,7 @@ router.route('/register/get-userid/:userid')  //Get userid
 router.route('/tag')
   .post(tag.post);       //Add new tag
 
-router.route('/tag/:tagid/:userid?')
+router.route('/tag/:tagid/:userid')
   .delete(tag.delete)   //Remove tag
   .get(tag.get);        //Get all games for a tag on the user's library
 

@@ -81,16 +81,18 @@ const deleteSql =
  `begin
  
     delete from GAMETAGS
-    where TAGID = :TAGID;
+    where TAGID = :TAGID
+    and USERID = :USERID;
  
     :rowcount := sql%rowcount;
  
   end;`
  
-async function del(tagid) {
+async function del(tagid, userid) {
 
   const binds = {
     TAGID: tagid,
+    USERID: userid,
     rowcount: {
       dir: oracledb.BIND_OUT,
       type: oracledb.VARCHAR
@@ -108,4 +110,4 @@ async function del(tagid) {
   }
 }
  
-module.exports.delete = del;
+module.exports.del = del;
