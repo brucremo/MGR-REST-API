@@ -7,7 +7,7 @@ async function post(req, res, next) {
         var object = {
             USERID: req.body.USERID,
             GAMEID: req.body.GAMEID,
-            TAGID: req.body.TAGID
+            TAGS: req.body.TAGS
         };
 
         var resultTag = await tag.create(object);

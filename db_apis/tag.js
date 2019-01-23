@@ -5,34 +5,78 @@ const client = igdb('aef56bac5ab539faba6d9f9b9429487b');
 
 async function create(obj) {
 
-    var result;
+    if (obj.TAGS.length > 1) {
 
-    try {
+        var result = [];
 
-        const tagObj = {
-            TAGID: obj.TAGID
+        for(var i = 0; i < obj.TAGS.length; i++){
+
+            try {
+
+                const tagObj = {
+                    TAGID: obj.TAGS[i]
+                }
+    
+                await database.Query(
+                    `insert into TAGS (TAGID)
+                VALUES (:TAGID)`,
+                    tagObj);
+            } catch (err) {
+    
+                result[i] = "Tag already exists";
+            }
+    
+            try {
+
+                const tagObj = {
+                    GAMEID: obj.GAMEID,
+                    USERID: obj.USERID,
+                    TAGID: obj.TAGS[i]
+                }
+
+                result[i] = await database.Query(
+                    `insert into GAMETAGS (TAGID, GAMEID, USERID)
+                    VALUES (:TAGID, :GAMEID, :USERID)`,
+                    tagObj);
+            } catch (err) {
+    
+                result[i] = "Tag already exists for this game";
+            }
         }
 
-        await database.Query(
-            `insert into TAGS (TAGID)
+        return result;
+
+    } else {
+
+        var result = "";
+
+        try {
+
+            const tagObj = {
+                TAGID: obj.TAGID
+            }
+
+            await database.Query(
+                `insert into TAGS (TAGID)
             VALUES (:TAGID)`,
-            tagObj);
-    } catch (err) {
+                tagObj);
+        } catch (err) {
 
-        result = "Tag already exists";
-    }
+            result = "Tag already exists";
+        }
 
-    try {
-        result = await database.Query(
-            `insert into GAMETAGS (TAGID, GAMEID, USERID)
+        try {
+            result = await database.Query(
+                `insert into GAMETAGS (TAGID, GAMEID, USERID)
                 VALUES (:TAGID, :GAMEID, :USERID)`,
-            obj);
-    } catch (err) {
+                obj);
+        } catch (err) {
 
-        result = "Tag already exists for this game";
+            result = "Tag already exists for this game";
+        }
+
+        return result;
     }
-
-    return result;
 }
 
 module.exports.create = create;
