@@ -12,11 +12,11 @@ async function create(obj) {
         const tagObj = {
             TAGID: obj.TAGID
         }
-    
+
         await database.Query(
-        `insert into TAGS (TAGID)
+            `insert into TAGS (TAGID)
             VALUES (:TAGID)`,
-        tagObj);
+            tagObj);
     } catch (err) {
 
         result = "Tag already exists";
@@ -26,7 +26,7 @@ async function create(obj) {
         result = await database.Query(
             `insert into GAMETAGS (TAGID, GAMEID, USERID)
                 VALUES (:TAGID, :GAMEID, :USERID)`,
-                obj);
+            obj);
     } catch (err) {
 
         result = "Tag already exists for this game";
@@ -49,36 +49,42 @@ async function find(context) {
 
     var idsQuery = "";
 
-    for(var i = 0; i < result.rows.length; i++){
+    if (result.rows.length != 0) {
 
-        idsQuery += result.rows[i].GAMEID;
+        for (var i = 0; i < result.rows.length; i++) {
 
-        if(result.rows[i+1] != undefined){
+            idsQuery += result.rows[i].GAMEID;
 
-            idsQuery += ",";
+            if (result.rows[i + 1] != undefined) {
+
+                idsQuery += ",";
+            }
         }
+
+        return client.games({
+            ids: [
+                idsQuery
+            ],
+            fields: '*'
+
+        }).then(response => {
+
+            return response.body;
+        }).catch(err => {
+
+            return err;
+        });
+    } else {
+
+        return "Tag does not exist for this user";
     }
-
-    return client.games({
-        ids: [
-            idsQuery
-        ],
-        fields: '*'
-
-    }).then(response => {
-
-        return response.body;
-    }).catch(err => {
-
-        return err;
-    });
 }
 
 module.exports.find = find;
 
 //Delete
 const deleteSql =
- `begin
+    `begin
  
     delete from GAMETAGS
     where TAGID = :TAGID
@@ -87,27 +93,27 @@ const deleteSql =
     :rowcount := sql%rowcount;
  
   end;`
- 
+
 async function del(tagid, userid) {
 
-  const binds = {
-    TAGID: tagid,
-    USERID: userid,
-    rowcount: {
-      dir: oracledb.BIND_OUT,
-      type: oracledb.VARCHAR
+    const binds = {
+        TAGID: tagid,
+        USERID: userid,
+        rowcount: {
+            dir: oracledb.BIND_OUT,
+            type: oracledb.VARCHAR
+        }
     }
-  }
 
-  const result = await database.Query(deleteSql, binds);
+    const result = await database.Query(deleteSql, binds);
 
-  if(result.outBinds.rowcount == 0){
+    if (result.outBinds.rowcount == 0) {
 
-    return false;
-  }else{
+        return false;
+    } else {
 
-    return true;
-  }
+        return true;
+    }
 }
- 
+
 module.exports.del = del;
