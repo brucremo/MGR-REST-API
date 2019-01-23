@@ -7,6 +7,7 @@ const library = require('../controllers/library.js');
 const igdb = require('../controllers/igdb.js');
 const reviews = require('../controllers/reviews.js');
 const register = require('../controllers/register.js');
+const tag = require('../controllers/tag.js');
 
 //User operations
 router.route('/users/:id?')
@@ -63,5 +64,11 @@ router.route('/register/get-email/:email')    //Get e-mail
   .get(register.getEmail);
 router.route('/register/get-userid/:userid')  //Get userid
   .get(register.getUserid);
+
+//Tag management
+router.route('/tag')
+  .post(tag.post)       //Add new tag
+  .delete(tag.delete)   //Remove tag
+  .get(tag.get);        //Get all games for a tag on the user's library
 
 module.exports = router;
