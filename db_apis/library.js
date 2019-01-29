@@ -56,36 +56,41 @@ async function find(context) {
 
     var idsQuery = "";
 
-    for(var i = 0; i < result.rows.length; i++){
+    for (var i = 0; i < result.rows.length; i++) {
 
         idsQuery += result.rows[i].GAMEID;
 
-        if(result.rows[i+1] != undefined){
+        if (result.rows[i + 1] != undefined) {
 
             idsQuery += ",";
         }
     }
 
-    return client.games({
-        ids: [
-            idsQuery
-        ],
-        fields: '*'
+    if (idsQuery != "") {
 
-    }).then(response => {
+        return client.games({
+            ids: [
+                idsQuery
+            ],
+            fields: '*'
 
-        return response.body;
-    }).catch(err => {
+        }).then(response => {
 
-        return err;
-    });
+            return response.body;
+        }).catch(err => {
+
+            return err;
+        });
+    }
+
+    return [];
 }
 
 module.exports.find = find;
 
 //Delete
 const deleteSql =
- `begin
+    `begin
  
     delete from GAMESOWNED
     where USERID = :USERID
@@ -94,27 +99,27 @@ const deleteSql =
     :rowcount := sql%rowcount;
  
   end;`
- 
+
 async function del(userid, gameid) {
 
-  const binds = {
-    USERID: userid,
-    GAMEID: gameid,
-    rowcount: {
-      dir: oracledb.BIND_OUT,
-      type: oracledb.VARCHAR
+    const binds = {
+        USERID: userid,
+        GAMEID: gameid,
+        rowcount: {
+            dir: oracledb.BIND_OUT,
+            type: oracledb.VARCHAR
+        }
     }
-  }
 
-  const result = await database.Query(deleteSql, binds);
+    const result = await database.Query(deleteSql, binds);
 
-  if(result.outBinds.rowcount == 0){
+    if (result.outBinds.rowcount == 0) {
 
-    return false;
-  }else{
+        return false;
+    } else {
 
-    return true;
-  }
+        return true;
+    }
 }
- 
+
 module.exports.delete = del;
