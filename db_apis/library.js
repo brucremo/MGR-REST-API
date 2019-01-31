@@ -39,8 +39,10 @@ async function update(usr) {
 module.exports.update = update;
 
 const baseQuery =
-    `select GAMEID
+    `select *
  from GAMESOWNED`;
+
+var resultQuery;
 //Read
 async function find(context) {
     let query = baseQuery;
@@ -52,15 +54,15 @@ async function find(context) {
         query += `\nwhere USERID = :USERID`;
     }
 
-    var result = await database.Query(query, binds);
+    resultQuery = await database.Query(query, binds);
 
     var idsQuery = "";
 
-    for (var i = 0; i < result.rows.length; i++) {
+    for (var i = 0; i < resultQuery.rows.length; i++) {
 
-        idsQuery += result.rows[i].GAMEID;
+        idsQuery += resultQuery.rows[i].GAMEID;
 
-        if (result.rows[i + 1] != undefined) {
+        if (resultQuery.rows[i + 1] != undefined) {
 
             idsQuery += ",";
         }
@@ -75,6 +77,17 @@ async function find(context) {
             fields: '*'
 
         }).then(response => {
+
+            for (var i = 0; i < response.body.length; i++) {
+
+                if (resultQuery.rows[i].FAVOURITE == 1) {
+
+                    response.body[i].favourite = true;
+                } else {
+
+                    response.body[i].favourite = false;
+                }
+            }
 
             return response.body;
         }).catch(err => {
@@ -123,3 +136,49 @@ async function del(userid, gameid) {
 }
 
 module.exports.delete = del;
+
+async function favourite(usr) {
+
+    var result;
+
+    var query = `update GAMESOWNED
+    set 
+    FAVOURITE = 1
+    where
+    GAMEID = :GAMEID
+    and USERID = :USERID`;
+
+    const ins = {
+        GAMEID: usr.GAMEID,
+        USERID: usr.USERID
+    };
+
+    resultQuery = await database.Query(
+        `select * from GAMESOWNED
+        where
+        GAMEID = :GAMEID
+        and USERID = :USERID`,
+        ins);
+
+    if(resultQuery.rows[0].FAVOURITE == 1){
+
+        query = `update GAMESOWNED
+        set 
+        FAVOURITE = 0
+        where
+        GAMEID = :GAMEID
+        and USERID = :USERID`;
+    } 
+
+    try {
+
+        result = await database.Query(query, ins);
+    } catch (err) {
+
+        result = ins.GAMEID + "ALREADY IN THE DATABASE";
+    }
+
+    return result;
+}
+
+module.exports.favourite = favourite;

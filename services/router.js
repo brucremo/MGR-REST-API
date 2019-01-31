@@ -30,6 +30,7 @@ router.route('/:id/reset/:guid?')
 //Add game to a user's library
 router.route('/library/:userid/:gameid')
   .put(library.put)
+  .post(library.post)
   .delete(library.delete);
 
 //Get the user's library information
