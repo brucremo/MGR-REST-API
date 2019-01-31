@@ -4,7 +4,7 @@ const igdb = require('igdb-api-node').default;
 const client = igdb('aef56bac5ab539faba6d9f9b9429487b');
 
 const createSql =
- `insert into reviews (
+  `insert into reviews (
   GAMEID,
   USERID,
   REVIEWSUMMARY,
@@ -20,8 +20,8 @@ const createSql =
     :GAMEPLATFORM
   )`;
 
-  const createSqlGame =
- `insert into games (
+const createSqlGame =
+  `insert into games (
   GAMEID
   ) values (
     :GAMEID
@@ -29,50 +29,50 @@ const createSql =
 
 async function create(review) {
 
-    let newGame = {
+  let newGame = {
 
-      GAMEID: review.GAMEID
-    }
+    GAMEID: review.GAMEID
+  }
 
-    try {
-      
-      await database.Query(createSqlGame, newGame);
-    } catch (error) {
-      
-      console.log(error);
-    }
+  try {
 
-    const result = await database.Query(createSql, review);
+    await database.Query(createSqlGame, newGame);
+  } catch (error) {
 
-    return result;
+    console.log(error);
+  }
+
+  const result = await database.Query(createSql, review);
+
+  return result;
 }
 
 module.exports.create = create;
 
 const baseQuery =
-    `select *
+  `select *
  from REVIEWS`;
 //Read
 async function find(context) {
-    let query = baseQuery;
-    const binds = {};
+  let query = baseQuery;
+  const binds = {};
 
-    if (context.id) {
-        binds.GAMEID = context.id;
+  if (context.id) {
+    binds.GAMEID = context.id;
 
-        query += `\nwhere GAMEID = :GAMEID`;
-    }
+    query += `\nwhere GAMEID = :GAMEID`;
+  }
 
-    var result = await database.Query(query, binds);
+  var result = await database.Query(query, binds);
 
-    return result.rows;
+  return result.rows;
 }
 
 module.exports.find = find;
 
 //Delete
 const deleteSql =
- `begin
+  `begin
  
     delete from REVIEWS
     where USERID = :USERID
@@ -81,7 +81,7 @@ const deleteSql =
     :rowcount := sql%rowcount;
  
   end;`
- 
+
 async function del(userid, gameid) {
 
   const binds = {
@@ -95,79 +95,113 @@ async function del(userid, gameid) {
 
   const result = await database.Query(deleteSql, binds);
 
-  if(result.outBinds.rowcount == 0){
+  if (result.outBinds.rowcount == 0) {
 
     return false;
-  }else{
+  } else {
 
     return true;
   }
 }
- 
+
 module.exports.delete = del;
 
 //Update
 const updateSql =
- `update REVIEWS
+  `update REVIEWS
   set REVIEWSUMMARY = :REVIEWSUMMARY,
   REVIEWRATING = :REVIEWRATING,
   GAMEPLATFORM = :GAMEPLATFORM
   where USERID = :USERID
   and GAMEID = :GAMEID`;
- 
+
 async function update(review) {
 
   const result = await database.Query(updateSql, review);
- 
+
   if (result.rowsAffected && result.rowsAffected === 1) {
     return review;
   } else {
     return result;
   }
 }
- 
+
 module.exports.update = update;
 
 const baseQueryUser =
-    `select *
+  `select *
  from REVIEWS`;
 //Read
 async function findUser(context) {
-    let query = baseQueryUser;
-    const binds = {};
+  let query = baseQueryUser;
+  const binds = {};
 
-    if (context.id) {
-        binds.USERID = context.id;
+  if (context.id) {
+    binds.USERID = context.id;
 
-        query += `\nwhere USERID = :USERID`;
+    query += `\nwhere USERID = :USERID`;
+  }
+
+  var result = await database.Query(query, binds);
+
+  var idsQuery = "";
+
+  for (var i = 0; i < result.rows.length; i++) {
+
+    idsQuery += result.rows[i].GAMEID;
+
+    if (result.rows[i + 1] != undefined) {
+
+      idsQuery += ",";
     }
+  }
 
-    var result = await database.Query(query, binds);
+  if (idsQuery != "") {
 
-    return result.rows;
+    return client.games({
+      ids: [
+        idsQuery
+      ],
+      fields: '*'
+
+    }).then(response => {
+
+      for(var i = 0; i < result.rows.length; i++){
+
+        result.rows[i].GAME = response.body[i];
+      }
+
+      return result.rows;
+    }).catch(err => {
+
+      return err;
+    });
+  }
+
+  return [];
 }
 
 module.exports.findUser = findUser;
 
 const baseQueryOne =
-    `select *
+  `select *
  from REVIEWS`;
 //Read
 async function findReview(context) {
-    let query = baseQueryUser;
-    const binds = {};
+  let query = baseQueryUser;
+  const binds = {};
 
-    if (context.id) {
-        binds.USERID = context.id;
-        binds.GAMEID = context.gameid;
+  if (context.id) {
+    binds.USERID = context.id;
+    binds.GAMEID = context.gameid;
 
-        query += `\nwhere USERID = :USERID
+    query += `\nwhere USERID = :USERID
         and GAMEID = :GAMEID`;
-    }
+  }
 
-    var result = await database.Query(query, binds);
+  var result = await database.Query(query, binds);
 
-    return result.rows;
+  return result.rows;
 }
 
 module.exports.findReview = findReview;
