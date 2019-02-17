@@ -38,6 +38,8 @@ async function post(req, res, next) {
   try {
 
     let rel = getRelFromRec(req);
+
+    rel.STATUS = 0;
  
     rel = await relationship.create(rel);
  
