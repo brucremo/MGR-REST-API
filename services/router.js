@@ -8,6 +8,7 @@ const igdb = require('../controllers/igdb.js');
 const reviews = require('../controllers/reviews.js');
 const register = require('../controllers/register.js');
 const tag = require('../controllers/tag.js');
+const relationship = require('../controllers/relationship.js')
 
 //User operations
 router.route('/users/:id?')
@@ -73,5 +74,12 @@ router.route('/tag')
 router.route('/tag/:tagid/:userid')
   .delete(tag.delete)   //Remove tag
   .get(tag.get);        //Get all games for a tag on the user's library
+
+//Friend relationship management
+router.route('/friends')
+  .get(relationship.get)        //Get all friends for a user
+  .post(relationship.post)      //Add friend to user circle
+  .put(relationship.put)        //Update friendship status
+  .delete(relationship.delete); //Remove friend
 
 module.exports = router;
