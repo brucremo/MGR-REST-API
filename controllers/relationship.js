@@ -5,7 +5,8 @@ async function get(req, res, next) {
   try {
 
     const context = {
-        USERID: req.body.USER_ONE_ID
+        USERID: req.body.USER_ONE_ID,
+        STATUS: req.body.STATUS
     };
  
     const rows = await relationship.find(context);
