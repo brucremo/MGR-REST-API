@@ -81,9 +81,11 @@ module.exports.put = put;
 async function del(req, res, next) {
   try {
  
-    let rel = getRelFromRec(req);
-    delete rel.STATUS;
-    delete rel.ACTION_USERID;
+    let rel = {
+
+      USER_ONE_ID : req.query.USER_ONE_ID,
+      USER_TWO_ID : req.query.USER_TWO_ID
+    }
 
     const success = await relationship.delete(rel);
  
