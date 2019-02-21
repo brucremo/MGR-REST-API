@@ -11,7 +11,6 @@ const baseQuery =
  and STATUS = :STATUS`;
 //Read
 async function find(context) {
-
     const result = await database.Query(baseQuery, context);
 
     return result.rows;
