@@ -8,7 +8,8 @@ const igdb = require('../controllers/igdb.js');
 const reviews = require('../controllers/reviews.js');
 const register = require('../controllers/register.js');
 const tag = require('../controllers/tag.js');
-const relationship = require('../controllers/relationship.js')
+const relationship = require('../controllers/relationship.js');
+const search = require('../controllers/search.js');
 
 //User operations
 router.route('/users/:id?')
@@ -81,5 +82,9 @@ router.route('/friends')
   .post(relationship.post)      //Add friend to user circle
   .put(relationship.put)        //Update friendship status
   .delete(relationship.delete); //Remove friend
+
+//Search for Users/groups
+router.route('/search')
+  .get(search.get);
 
 module.exports = router;
