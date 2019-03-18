@@ -10,6 +10,7 @@ const register = require('../controllers/register.js');
 const tag = require('../controllers/tag.js');
 const relationship = require('../controllers/relationship.js');
 const search = require('../controllers/search.js');
+const group = require('../controllers/group.js');
 
 //User operations
 router.route('/users/:id?')
@@ -86,5 +87,12 @@ router.route('/friends')
 //Search for Users/groups
 router.route('/search')
   .get(search.get);
+
+//Groups functionality
+router.route('/group')
+  .get(group.get)             //Get group information
+  .post(group.post)           //Create group
+  .put(group.put)             //Update group information
+  .delete(group.delete);      //Delete group
 
 module.exports = router;
