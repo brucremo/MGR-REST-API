@@ -11,6 +11,7 @@ const tag = require('../controllers/tag.js');
 const relationship = require('../controllers/relationship.js');
 const search = require('../controllers/search.js');
 const group = require('../controllers/group.js');
+const grouproles = require('../controllers/grouproles.js');
 
 //User operations
 router.route('/users/:id?')
@@ -94,5 +95,12 @@ router.route('/group')
   .post(group.post)           //Create group
   .put(group.put)             //Update group information
   .delete(group.delete);      //Delete group
+
+//Role add/remove functionality
+router.route('/role-add')
+  .post(grouproles.post);
+
+router.route('/role-remove')
+  .delete(grouproles.delete);
 
 module.exports = router;
