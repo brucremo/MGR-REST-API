@@ -27,6 +27,7 @@ function getRelFromRec(req) {
   const info = {
     GROUPID: req.body.GROUPID,
     GROUPPRIVACY: req.body.GROUPPRIVACY,
+    GROUPSUMMARY: req.body.GROUPSUMMARY,
     GROUPOWNER: req.body.GROUPOWNER
   };
  
@@ -63,14 +64,23 @@ async function put(req, res, next) {
     if(rel.GROUPOWNER){
 
       delete rel.GROUPPRIVACY;
+      delete rel.GROUPSUMMARY;
       query += 
       `set GROUPOWNER = :GROUPOWNER
       where GROUPID = :GROUPID`;
     }else if(rel.GROUPPRIVACY){
 
       delete rel.GROUPOWNER;
+      delete rel.GROUPSUMMARY;
       query += 
       `set GROUPPRIVACY = :GROUPPRIVACY
+      where GROUPID = :GROUPID`;
+    }else if(rel.GROUPSUMMARY){
+
+      delete rel.GROUPOWNER;
+      delete rel.GROUPPRIVACY;
+      query += 
+      `set GROUPSUMMARY = :GROUPSUMMARY
       where GROUPID = :GROUPID`;
     }else{
 

@@ -27,8 +27,8 @@ module.exports.find = find;
 async function create(group) {
 
     const result = await database.Query(
-        `INSERT INTO GROUPS (GROUPID, GROUPPRIVACY, GROUPOWNER)
-        VALUES (:GROUPID, :GROUPPRIVACY, :GROUPOWNER)`,
+        `INSERT INTO GROUPS (GROUPID, GROUPSUMMARY, GROUPPRIVACY, GROUPOWNER)
+        VALUES (:GROUPID, :GROUPSUMMARY, :GROUPPRIVACY, :GROUPOWNER)`,
         group);
 
     return result;
