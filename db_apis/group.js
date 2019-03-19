@@ -1,13 +1,9 @@
 const database = require('../services/database.js');
 const oracledb = require('oracledb');
 
-const baseQuery =
-    `select *
- from GROUPS
- where GROUPID = :GROUPID`;
 //Read
-async function find(context) {
-    const result = await database.Query(baseQuery, context);
+async function find(context, query) {
+    const result = await database.Query(query, context);
 
     var userArray = await database.Query(`select USERID from GROUPADMINS where GROUPID = :GROUPID`, context);
     result.rows[0].GROUPADMINS = userArray.rows;
@@ -22,6 +18,28 @@ async function find(context) {
 }
 
 module.exports.find = find;
+
+//Read
+async function findGroupsUser(context) {
+    //const result = await database.Query(query, context);
+    const result = {
+
+        USERID: context.USERID
+    }
+
+    var userArray = await database.Query(`select GROUPID from GROUPADMINS where USERID = :USERID`, context);
+    result.GROUPADMINS = userArray.rows;
+
+    userArray = await database.Query(`select GROUPID from GROUPMEMBERS where USERID = :USERID`, context);
+    result.GROUPMEMBERS = userArray.rows;
+
+    userArray = await database.Query(`select GROUPID from GROUPMODERATORS where USERID = :USERID`, context);
+    result.GROUPMODERATORS = userArray.rows;
+
+    return result;
+}
+
+module.exports.findGroupsUser = findGroupsUser;
 
 //Create
 async function create(group) {

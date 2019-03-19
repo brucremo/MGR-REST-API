@@ -4,11 +4,16 @@ const group = require('../db_apis/group.js');
 async function get(req, res, next) {
   try {
 
+    const baseQuery =
+    `select *
+    from GROUPS
+    where GROUPID = :GROUPID`;
+
     const context = {
         GROUPID: req.query.GROUPID
     };
  
-    const rows = await group.find(context);
+    const rows = await group.find(context, baseQuery);
  
     if (rows.length >= 1) {
         res.status(200).json(rows);
@@ -21,6 +26,28 @@ async function get(req, res, next) {
 }
  
 module.exports.get = get;
+
+//GET requests handling - RETRIEVE - OK
+async function getGroupsUser(req, res, next) {
+  try {
+
+    const context = {
+        USERID: req.query.USERID
+    };
+ 
+    const rows = await group.findGroupsUser(context);
+ 
+    if (rows) {
+        res.status(200).json(rows);
+    } else {
+        res.status(404).end();
+    }
+  } catch (err) {
+    next(err);
+  }
+}
+ 
+module.exports.getGroupsUser = getGroupsUser;
 
 //POST requests handling - CREATE
 function getRelFromRec(req) {

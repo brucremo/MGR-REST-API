@@ -96,6 +96,9 @@ router.route('/group')
   .put(group.put)             //Update group information
   .delete(group.delete);      //Delete group
 
+router.route('/user-groups')
+  .get(group.getGroupsUser);
+
 //Role add/remove functionality
 router.route('/role-add')
   .post(grouproles.post);
