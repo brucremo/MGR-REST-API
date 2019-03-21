@@ -86,45 +86,13 @@ module.exports.post = post;
 async function put(req, res, next) {
   try {
     let rel = getRelFromRec(req);
-    var query = `update GROUPS `;
-
-    if(rel.GROUPNAME){
-
-      delete rel.GROUPOWNER;
-      delete rel.GROUPPRIVACY;
-      delete rel.GROUPSUMMARY;
-      query += 
-      `set GROUPNAME = :GROUPNAME
-      where GROUPID = :GROUPID`;
-
-    }else if(rel.GROUPOWNER){
-
-      delete rel.GROUPNAME;
-      delete rel.GROUPPRIVACY;
-      delete rel.GROUPSUMMARY;
-      query += 
-      `set GROUPOWNER = :GROUPOWNER
-      where GROUPID = :GROUPID`;
-    }else if(rel.GROUPPRIVACY){
-
-      delete rel.GROUPNAME;
-      delete rel.GROUPOWNER;
-      delete rel.GROUPSUMMARY;
-      query += 
-      `set GROUPPRIVACY = :GROUPPRIVACY
-      where GROUPID = :GROUPID`;
-    }else if(rel.GROUPSUMMARY){
-
-      delete rel.GROUPNAME;
-      delete rel.GROUPOWNER;
-      delete rel.GROUPPRIVACY;
-      query += 
-      `set GROUPSUMMARY = :GROUPSUMMARY
-      where GROUPID = :GROUPID`;
-    }else{
-
-      res.status(500).end("OBJECT IS MISSING UPDATE PARAMETER");
-    }
+    
+    var query = `update GROUPS 
+    set GROUPNAME = :GROUPNAME
+    GROUPOWNER = :GROUPOWNER
+    GROUPPRIVACY = :GROUPPRIVACY
+    GROUPSUMMARY = :GROUPSUMMARY
+    where GROUPID = :GROUPID`;
  
     rel = await group.update(rel, query);
  
