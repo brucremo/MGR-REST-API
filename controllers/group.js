@@ -88,8 +88,18 @@ async function put(req, res, next) {
     let rel = getRelFromRec(req);
     var query = `update GROUPS `;
 
-    if(rel.GROUPOWNER){
+    if(rel.GROUPNAME){
 
+      delete rel.GROUPOWNER;
+      delete rel.GROUPPRIVACY;
+      delete rel.GROUPSUMMARY;
+      query += 
+      `set GROUPNAME = :GROUPNAME
+      where GROUPID = :GROUPID`;
+
+    }else if(rel.GROUPOWNER){
+
+      delete rel.GROUPNAME;
       delete rel.GROUPPRIVACY;
       delete rel.GROUPSUMMARY;
       query += 
@@ -97,6 +107,7 @@ async function put(req, res, next) {
       where GROUPID = :GROUPID`;
     }else if(rel.GROUPPRIVACY){
 
+      delete rel.GROUPNAME;
       delete rel.GROUPOWNER;
       delete rel.GROUPSUMMARY;
       query += 
@@ -104,6 +115,7 @@ async function put(req, res, next) {
       where GROUPID = :GROUPID`;
     }else if(rel.GROUPSUMMARY){
 
+      delete rel.GROUPNAME;
       delete rel.GROUPOWNER;
       delete rel.GROUPPRIVACY;
       query += 

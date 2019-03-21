@@ -7,11 +7,11 @@ async function get(req, res, next) {
     var context = {};
     var query = `select`;
 
-    if(req.query.GROUPID){
+    if(req.query.GROUPNAME){
 
-        context.GROUPID = req.query.GROUPID;
-        context.GROUPID += '%';
-        query += ` GROUPID from GROUPS where GROUPID like :GROUPID`;
+        context.GROUPNAME = req.query.GROUPNAME;
+        context.GROUPNAME += '%';
+        query += ` GROUPID, GROUPNAME from GROUPS where GROUPNAME like :GROUPNAME`;
     }else{
 
         if(req.query.USEREMAIL){

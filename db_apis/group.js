@@ -27,13 +27,13 @@ async function findGroupsUser(context) {
         USERID: context.USERID
     }
 
-    var userArray = await database.Query(`select GROUPID from GROUPADMINS where USERID = :USERID`, context);
+    var userArray = await database.Query(`select GROUPID, GROUPNAME from GROUPADMINS where USERID = :USERID`, context);
     result.GROUPADMINS = userArray.rows;
 
-    userArray = await database.Query(`select GROUPID from GROUPMEMBERS where USERID = :USERID`, context);
+    userArray = await database.Query(`select GROUPID, GROUPNAME from GROUPMEMBERS where USERID = :USERID`, context);
     result.GROUPMEMBERS = userArray.rows;
 
-    userArray = await database.Query(`select GROUPID from GROUPMODERATORS where USERID = :USERID`, context);
+    userArray = await database.Query(`select GROUPID, GROUPNAME from GROUPMODERATORS where USERID = :USERID`, context);
     result.GROUPMODERATORS = userArray.rows;
 
     return result;
@@ -45,8 +45,8 @@ module.exports.findGroupsUser = findGroupsUser;
 async function create(group) {
 
     const result = await database.Query(
-        `INSERT INTO GROUPS (GROUPID, GROUPSUMMARY, GROUPPRIVACY, GROUPOWNER)
-        VALUES (:GROUPID, :GROUPSUMMARY, :GROUPPRIVACY, :GROUPOWNER)`,
+        `INSERT INTO GROUPS (GROUPNAME, GROUPSUMMARY, GROUPPRIVACY, GROUPOWNER)
+        VALUES (:GROUPNAME, :GROUPSUMMARY, :GROUPPRIVACY, :GROUPOWNER)`,
         group);
 
     return result;
