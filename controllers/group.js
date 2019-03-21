@@ -115,7 +115,7 @@ async function del(req, res, next) {
  
     let rel = {
 
-      GROUPID : req.body.GROUPID
+      GROUPID : req.query.GROUPID
     }
 
     const success = await group.delete(rel);
