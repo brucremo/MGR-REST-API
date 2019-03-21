@@ -66,7 +66,7 @@ async function post(req, res, next) {
   try {
 
     let rel = getRelFromRec(req);
- 
+    delete rel.GROUPID;
     rel = await group.create(rel);
  
     res.status(201).json();
