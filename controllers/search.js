@@ -11,7 +11,7 @@ async function get(req, res, next) {
 
         context.GROUPNAME = req.query.GROUPNAME;
         context.GROUPNAME += '%';
-        query += ` GROUPID, GROUPNAME from GROUPS where GROUPNAME like :GROUPNAME`;
+        query += ` * from GROUPS where GROUPNAME like :GROUPNAME`;
     }else{
 
         if(req.query.USEREMAIL){
