@@ -55,7 +55,8 @@ function getRelFromRec(req) {
     GROUPID: req.body.GROUPID,
     GROUPPRIVACY: req.body.GROUPPRIVACY,
     GROUPSUMMARY: req.body.GROUPSUMMARY,
-    GROUPOWNER: req.body.GROUPOWNER
+    GROUPOWNER: req.body.GROUPOWNER,
+    GROUPNAME: req.body.GROUPNAME
   };
  
   return info;
@@ -88,9 +89,9 @@ async function put(req, res, next) {
     let rel = getRelFromRec(req);
     
     var query = `update GROUPS 
-    set GROUPNAME = :GROUPNAME
-    GROUPOWNER = :GROUPOWNER
-    GROUPPRIVACY = :GROUPPRIVACY
+    set GROUPNAME = :GROUPNAME,
+    GROUPOWNER = :GROUPOWNER,
+    GROUPPRIVACY = :GROUPPRIVACY,
     GROUPSUMMARY = :GROUPSUMMARY
     where GROUPID = :GROUPID`;
  
