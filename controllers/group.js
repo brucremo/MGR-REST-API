@@ -90,11 +90,11 @@ async function put(req, res, next) {
     
     var query = `update GROUPS 
     set GROUPNAME = :GROUPNAME,
-    GROUPOWNER = :GROUPOWNER,
     GROUPPRIVACY = :GROUPPRIVACY,
     GROUPSUMMARY = :GROUPSUMMARY
     where GROUPID = :GROUPID`;
  
+    //CREATE FUNCTION FOR CHANGE GROUP OWNER
     rel = await group.update(rel, query);
  
     if (rel.rowsAffected !== 0) {
