@@ -27,13 +27,13 @@ async function findGroupsUser(context) {
         USERID: context.USERID
     }
 
-    var userArray = await database.Query(`select GROUPID, GROUPNAME from GROUPADMINS where USERID = :USERID`, context);
+    var userArray = await database.Query(`select GROUPID from GROUPADMINS where USERID = :USERID`, context);
     result.GROUPADMINS = userArray.rows;
 
-    userArray = await database.Query(`select GROUPID, GROUPNAME from GROUPMEMBERS where USERID = :USERID`, context);
+    userArray = await database.Query(`select GROUPID from GROUPMEMBERS where USERID = :USERID`, context);
     result.GROUPMEMBERS = userArray.rows;
 
-    userArray = await database.Query(`select GROUPID, GROUPNAME from GROUPMODERATORS where USERID = :USERID`, context);
+    userArray = await database.Query(`select GROUPID from GROUPMODERATORS where USERID = :USERID`, context);
     result.GROUPMODERATORS = userArray.rows;
 
     return result;
