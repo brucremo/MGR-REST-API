@@ -50,7 +50,12 @@ module.exports.post = post;
 async function del(req, res, next) {
   try {
  
-    let rel = getRelFromRec(req);
+    let rel = {
+      GROUPID: req.query.GROUPID,
+      USERID: req.query.USERID,
+      TYPE: req.query.TYPE
+    };
+    
     var query = `begin `;
 
     if(rel.TYPE == "ADMIN"){
@@ -84,7 +89,7 @@ async function del(req, res, next) {
 
     delete rel.TYPE;
 
-    const success = await grouproles.delete(rel, query);
+    const success = await grouproles.del(rel, query);
  
     if (success) {
       res.status(204).end();
@@ -96,4 +101,4 @@ async function del(req, res, next) {
   }
 }
  
-module.exports.delete = del;
+module.exports.del = del;
