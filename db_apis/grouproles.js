@@ -49,6 +49,6 @@ async function del(rel, query) {
     }
 }
 
-module.exports.delete = del;
+module.exports.del = del;
 
 

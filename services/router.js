@@ -104,6 +104,6 @@ router.route('/role-add')
   .post(grouproles.post);
 
 router.route('/role-remove')
-  .delete(grouproles.delete);
+  .delete(grouproles.del);
 
 module.exports = router;
