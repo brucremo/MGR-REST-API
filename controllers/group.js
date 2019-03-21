@@ -87,6 +87,8 @@ module.exports.post = post;
 async function put(req, res, next) {
   try {
     let rel = getRelFromRec(req);
+
+    delete rel.GROUPOWNER;
     
     var query = `update GROUPS 
     set GROUPNAME = :GROUPNAME,
