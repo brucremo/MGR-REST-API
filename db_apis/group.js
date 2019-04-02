@@ -28,7 +28,7 @@ async function findGroupsUser(context) {
     }
 
     var userArray = await database.Query(
-        `SELECT GROUPNAME
+        `SELECT GROUPID, GROUPNAME
         FROM GROUPS
         WHERE GROUPID IN (SELECT GROUPID 
         FROM GROUPADMINS
@@ -37,7 +37,7 @@ async function findGroupsUser(context) {
     result.GROUPADMINS = userArray.rows;
 
     userArray = await database.Query(
-        `SELECT GROUPNAME
+        `SELECT GROUPID, GROUPNAME
         FROM GROUPS
         WHERE GROUPID IN (SELECT GROUPID 
         FROM GROUPMEMBERS
@@ -46,7 +46,7 @@ async function findGroupsUser(context) {
     result.GROUPMEMBERS = userArray.rows;
 
     userArray = await database.Query(
-        `SELECT GROUPNAME
+        `SELECT GROUPID, GROUPNAME
         FROM GROUPS
         WHERE GROUPID IN (SELECT GROUPID 
         FROM GROUPMODERATORS
