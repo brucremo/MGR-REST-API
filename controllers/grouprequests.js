@@ -38,6 +38,8 @@ module.exports.post = post;
 async function put(req, res, next) {
     try {
       let rel = getRelFromRec(req);
+
+      rel.STATUS = 1;
    
       rel = await grouprequests.update(rel);
    
