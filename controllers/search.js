@@ -8,30 +8,31 @@ async function get(req, res, next) {
     var query = `select`;
 
     if(req.query.GROUPNAME){
-
-        context.GROUPNAME = req.query.GROUPNAME;
+        context.GROUPNAME = '%';
+        context.GROUPNAME += req.query.GROUPNAME;
         context.GROUPNAME += '%';
-        query += ` * from GROUPS where GROUPNAME like :GROUPNAME`;
+        query += ` * from GROUPS where UPPER(GROUPNAME) like UPPER(:GROUPNAME)`;
     }else{
 
         if(req.query.USEREMAIL){
-
-            context.USEREMAIL = req.query.USEREMAIL;
+          context.USEREMAIL = '%';
+            context.USEREMAIL += req.query.USEREMAIL;
             context.USEREMAIL += '%';
             query += ` USERID, USERNAME, USERAVATAR, USERSUMMARY, USERLOCATION
-             from USERS where USEREMAIL like :USEREMAIL`;
+             from USERS where UPPER(USEREMAIL) like UPPER(:USEREMAIL)`;
         }else if (req.query.USERID){
 
-            context.USERID = req.query.USERID;
+            context.USERID = '%';
+            context.USERID += req.query.USERID;
             context.USERID += '%';
             query += ` USERID, USERNAME, USERAVATAR, USERSUMMARY, USERLOCATION 
-            from USERS where USERID like :USERID`;
+            from USERS where UPPER(USERID) like UPPER(:USERID)`;
         }else{
-
-            context.USERNAME = req.query.USERNAME;
+          context.USERNAME = '%';
+            context.USERNAME += req.query.USERNAME;
             context.USERNAME += '%';
             query += ` USERID, USERNAME, USERAVATAR, USERSUMMARY, USERLOCATION
-             from USERS where USERNAME like :USERNAME`;
+             from USERS where UPPER(USERNAME) like UPPER(:USERNAME)`;
         }
     }
 

@@ -5,15 +5,16 @@ const oracledb = require('oracledb');
 async function find(context, query) {
     const result = await database.Query(query, context);
 
-    var userArray = await database.Query(`select USERID from GROUPADMINS where GROUPID = :GROUPID`, context);
-    result.rows[0].GROUPADMINS = userArray.rows;
+    if (result.rows.length != 0) {
+        var userArray = await database.Query(`select USERID from GROUPADMINS where GROUPID = :GROUPID`, context);
+        result.rows[0].GROUPADMINS = userArray.rows;
 
-    userArray = await database.Query(`select USERID from GROUPMEMBERS where GROUPID = :GROUPID`, context);
-    result.rows[0].GROUPMEMBERS = userArray.rows;
+        userArray = await database.Query(`select USERID from GROUPMEMBERS where GROUPID = :GROUPID`, context);
+        result.rows[0].GROUPMEMBERS = userArray.rows;
 
-    userArray = await database.Query(`select USERID from GROUPMODERATORS where GROUPID = :GROUPID`, context);
-    result.rows[0].GROUPMODERATORS = userArray.rows;
-
+        userArray = await database.Query(`select USERID from GROUPMODERATORS where GROUPID = :GROUPID`, context);
+        result.rows[0].GROUPMODERATORS = userArray.rows;
+    }
     return result.rows;
 }
 
@@ -32,7 +33,7 @@ async function findGroupsUser(context) {
         FROM GROUPS
         WHERE GROUPID IN (SELECT GROUPID 
         FROM GROUPADMINS
-        WHERE USERID = :USERID)`, 
+        WHERE USERID = :USERID)`,
         context);
     result.GROUPADMINS = userArray.rows;
 
@@ -50,7 +51,7 @@ async function findGroupsUser(context) {
         FROM GROUPS
         WHERE GROUPID IN (SELECT GROUPID 
         FROM GROUPMODERATORS
-        WHERE USERID = :USERID)`, 
+        WHERE USERID = :USERID)`,
         context);
     result.GROUPMODERATORS = userArray.rows;
 

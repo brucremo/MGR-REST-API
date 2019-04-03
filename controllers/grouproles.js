@@ -10,7 +10,7 @@ function getRelFromRec(req) {
  
   return info;
 }
- 
+
 async function post(req, res, next) {
   try {
 
