@@ -108,9 +108,9 @@ router.route('/role-remove')
   .delete(grouproles.del);
 
 //Group requests functionality
-/*router.route('/group-request')
+router.route('/group-request')
   .delete(grouprequests.del)
   .put(grouprequests.put)
-  .post(grouprequests.post);*/
+  .post(grouprequests.post);
 
 module.exports = router;
