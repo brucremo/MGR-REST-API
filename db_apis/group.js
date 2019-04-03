@@ -9,7 +9,7 @@ async function find(context, query) {
         var userArray = await database.Query(`select USERID from GROUPADMINS where GROUPID = :GROUPID`, context);
         result.rows[0].GROUPADMINS = userArray.rows;
 
-        userArray = await database.Query(`select USERID from GROUPMEMBERS where GROUPID = :GROUPID`, context);
+        userArray = await database.Query(`select USERID, STATUS from GROUPMEMBERS where GROUPID = :GROUPID`, context);
         result.rows[0].GROUPMEMBERS = userArray.rows;
 
         userArray = await database.Query(`select USERID from GROUPMODERATORS where GROUPID = :GROUPID`, context);
