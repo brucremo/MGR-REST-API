@@ -38,11 +38,21 @@ async function findGroupsUser(context) {
     result.GROUPADMINS = userArray.rows;
 
     userArray = await database.Query(
-        `SELECT GROUPID, GROUPNAME
-        FROM GROUPS
-        WHERE GROUPID IN (SELECT GROUPID 
+        `SELECT A.GROUPID, A.USERID, A.STATUS, B.GROUPNAME FROM
+        (SELECT * 
         FROM GROUPMEMBERS
-        WHERE USERID = :USERID)`,
+        WHERE USERID = :USERID
+        AND GROUPID IN (SELECT GROUPID
+                FROM GROUPS
+                WHERE GROUPID IN (SELECT GROUPID
+                FROM GROUPMEMBERS
+                WHERE USERID = :USERID))) A
+        JOIN (SELECT GROUPID, GROUPNAME
+                FROM GROUPS
+                WHERE GROUPID IN (SELECT GROUPID 
+                FROM GROUPMEMBERS
+                WHERE USERID = :USERID)) B
+        ON A.GROUPID = B.GROUPID;`,
         context);
     result.GROUPMEMBERS = userArray.rows;
 
