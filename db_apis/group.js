@@ -52,7 +52,7 @@ async function findGroupsUser(context) {
                 WHERE GROUPID IN (SELECT GROUPID 
                 FROM GROUPMEMBERS
                 WHERE USERID = :USERID)) B
-        ON A.GROUPID = B.GROUPID;`,
+        ON A.GROUPID = B.GROUPID`,
         context);
     result.GROUPMEMBERS = userArray.rows;
 
