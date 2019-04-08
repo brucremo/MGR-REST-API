@@ -11,12 +11,12 @@ async function find(context, query) {
 module.exports.find = find;
 
 //Create
-async function create(thread) {
+async function create(post) {
 
     const result = await database.Query(
-        `INSERT INTO THREAD (THREAD_SUBJECT, THREAD_TITLE, STATUS, CREATED_BY, GROUPID)
-        VALUES (:THREAD_SUBJECT, :THREAD_TITLE, :STATUS, :CREATED_BY, :GROUPID)`,
-        thread);
+        `INSERT INTO POST (POST_CONTENT, THREAD_ID, STATUS, CREATED_BY)
+        VALUES (:POST_CONTENT, :THREAD_ID, :STATUS, :CREATED_BY)`,
+        post);
 
     return result;
 }
@@ -41,12 +41,9 @@ module.exports.update = update;
 const deleteSql =
     `begin
 
-    delete from THREAD
-    where THREAD_ID = :THREAD_ID
-    and GROUPID = :GROUPID;
-
     delete from POST
-    where THREAD_ID = :THREAD_ID;
+    where POST_ID = :POST_ID
+    and THREAD_ID = :THREAD_ID;
  
     :rowcount := sql%rowcount;
  

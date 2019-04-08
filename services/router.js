@@ -124,4 +124,11 @@ router.route('/thread')
 router.route('/thread-status')
   .put(thread.putStatus);
 
+//Posts CRUD
+router.route('/thread-post')
+  .get(posts.get)
+  .post(posts.post)
+  .put(posts.put)
+  .delete(posts.delete);
+
 module.exports = router;
