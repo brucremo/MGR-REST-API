@@ -13,6 +13,7 @@ const search = require('../controllers/search.js');
 const group = require('../controllers/group.js');
 const grouprequests = require('../controllers/grouprequests.js')
 const grouproles = require('../controllers/grouproles.js');
+const thread = require('../controllers/thread.js');
 
 //User operations
 router.route('/users/:id?')
@@ -112,5 +113,15 @@ router.route('/group-request')
   .delete(grouprequests.del)
   .put(grouprequests.put)
   .post(grouprequests.post);
+
+//Threads CRUD
+router.route('/thread')
+  .get(thread.get)
+  .post(thread.post)
+  .put(thread.put)
+  .delete(thread.delete);
+
+router.route('/thread-status')
+  .put(thread.putStatus);
 
 module.exports = router;
