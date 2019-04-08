@@ -4,7 +4,7 @@ const thread = require('../db_apis/thread.js');
 async function get(req, res, next) {
     try {
 
-        const baseQuery =
+        var baseQuery =
             `select *
     from THREAD
     where THREAD_ID = :THREAD_ID
@@ -14,6 +14,16 @@ async function get(req, res, next) {
             THREAD_ID: req.query.THREAD_ID,
             GROUPID: req.query.GROUPID
         };
+
+        if(context.THREAD_ID == undefined){
+
+            delete context.THREAD_ID;
+            
+            baseQuery =
+            `select *
+            from THREAD
+            where GROUPID = :GROUPID`;
+        }
 
         const rows = await thread.find(context, baseQuery);
 
