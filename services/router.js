@@ -14,6 +14,7 @@ const group = require('../controllers/group.js');
 const grouprequests = require('../controllers/grouprequests.js')
 const grouproles = require('../controllers/grouproles.js');
 const thread = require('../controllers/thread.js');
+const posts = require('../controllers/post.js');
 
 //User operations
 router.route('/users/:id?')
@@ -130,5 +131,8 @@ router.route('/thread-post')
   .post(posts.post)
   .put(posts.put)
   .delete(posts.delete);
+
+router.route('/post-status')
+  .put(posts.putStatus); 
 
 module.exports = router;

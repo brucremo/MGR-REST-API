@@ -41,12 +41,12 @@ module.exports.update = update;
 const deleteSql =
     `begin
 
+    delete from POST
+    where THREAD_ID = :THREAD_ID;
+
     delete from THREAD
     where THREAD_ID = :THREAD_ID
     and GROUPID = :GROUPID;
-
-    delete from POST
-    where THREAD_ID = :THREAD_ID;
  
     :rowcount := sql%rowcount;
  
