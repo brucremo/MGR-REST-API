@@ -15,6 +15,16 @@ async function get(req, res, next) {
             POST_ID: req.query.POST_ID
         };
 
+        if(context.POST_ID == undefined){
+
+            delete context.POST_ID;
+            
+            baseQuery =
+            `select *
+            from POST
+            where THREAD_ID = :THREAD_ID`;
+        }
+
         const rows = await posts.find(context, baseQuery);
 
         if (rows.length >= 1) {
