@@ -4,7 +4,7 @@ const posts = require('../db_apis/post.js');
 async function get(req, res, next) {
     try {
 
-        const baseQuery =
+        var baseQuery =
             `select *
     from POST
     where POST_ID = :POST_ID
